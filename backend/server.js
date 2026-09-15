@@ -1,5 +1,6 @@
 ﻿const express = require('express');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 const { generateColdEmails, generateAdCopy } = require('./claude-service');
 const { createCheckoutSession, getSubscriptionStatus } = require('./stripe-service');
@@ -8,6 +9,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK' });
@@ -71,6 +73,10 @@ app.post('/api/checkout', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
 
 const PORT = process.env.PORT || 3001;
