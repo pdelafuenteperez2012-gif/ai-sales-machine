@@ -1,8 +1,19 @@
 {
-  "buildCommand": "cd backend && npm install",
-  "devCommand": "node backend/server.js",
-  "outputDirectory": ".",
-  "env": {
-    "NODE_ENV": "production"
-  }
+  "version": 2,
+  "public": false,
+  "builds": [
+    {
+      "src": "backend/server.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["frontend/**", "backend/**"]
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "backend/server.js"
+    }
+  ]
 }
