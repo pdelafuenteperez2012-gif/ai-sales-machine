@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Sales Machine - Generador de Emails y Copywriting</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        header p {
+            font-size: 20px;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .feature {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .feature h3 {
+            color: #667eea;
+            margin: 15px 0;
+            font-size: 20px;
+        }
+
+        .feature p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .pricing {
+            background: white;
+            padding: 60px 20px;
+            margin: 80px 0;
+        }
+
+        .pricing h2 {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 36px;
+        }
+
+        .plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .plan {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .plan:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .plan.featured {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+        }
+
+        .plan h3 {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .price {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .features-list {
+            text-align: left;
+            margin: 30px 0;
+        }
+
+        .features-list li {
+            list-style: none;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .features-list li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .plan.featured .features-list li:before {
+            color: #fff;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: opacity 0.3s;
+        }
+
+        .cta-button:hover {
+            opacity: 0.9;
+        }
+
+        .plan.featured .cta-button {
+            background: white;
+            color: #667eea;
+        }
+
+        footer {
+            background: #f8f9fa;
+            padding: 40px 20px;
+            text-align: center;
+            color: #666;
+            margin-top: 100px;
+        }
+
+        .demo {
+            background: white;
+            padding: 60px 20px;
+            margin: 80px 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .demo h2 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+
+        .output {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .output.active {
+            display: block;
+        }
+
+        .email-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #667eea;
+            border-radius: 3px;
+        }
+
+        .email-subject {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🚀 AI Sales Machine</h1>
+        <p>Generador automático de emails de ventas y copywriting impulsado por IA.</p>
+        <h2 style="font-size: 32px; margin-top: 20px; color: #FFD700;">100% GRATIS</h2>
+    </header>
+
+    <div class="container">
+        <section class="features">
+            <div class="feature">
+                <h3>📧 100 Emails/Día</h3>
+                <p>Cold emails personalizados y efectivos generados automáticamente por IA</p>
+            </div>
+            <div class="feature">
+                <h3>📢 Ad Copy Profesional</h3>
+                <p>Copywriting para Facebook, Google, TikTok optimizado para conversiones</p>
+            </div>
+            <div class="feature">
+                <h3>🎯 Segmentación Profunda</h3>
+                <p>Personalización por audiencia, industria y competencia</p>
+            </div>
+            <div class="feature">
+                <h3>⚡ Resultados Inmediatos</h3>
+                <p>Generación en segundos, listo para enviar</p>
+            </div>
+        </section>
+
+        <section class="demo">
+            <h2>Prueba ahora (Demo)</h2>
+            <form id="demoForm">
+                <div class="input-group">
+                    <label>Tu Producto/Servicio</label>
+                    <input type="text" id="product" placeholder="Ej: Software de CRM para startups" required>
+                </div>
+                <div class="input-group">
+                    <label>Audiencia Objetivo</label>
+                    <textarea id="audience" placeholder="Ej: Fundadores de startups B2B, 25-45 años, ingresos $50K+" required></textarea>
+                </div>
+                <div class="input-group">
+                    <label>Competencia Principal</label>
+                    <input type="text" id="competitor" placeholder="Ej: Salesforce, Hubspot">
+                </div>
+                <button type="submit" class="cta-button">Generar Emails</button>
+            </form>
+
+            <div class="output" id="output">
+                <h3>Emails Generados:</h3>
+                <div id="emailsList"></div>
+            </div>
+        </section>
+    </div>
+
+    <section class="pricing">
+        <div class="container">
+            <h2>Modelo Freemium</h2>
+            <div class="plans">
+                <div class="plan featured">
+                    <h3>Prueba Gratis</h3>
+                    <div class="price">$0<span style="font-size: 16px;">14 días</span></div>
+                    <p style="color: #FFD700; font-weight: bold; margin: 10px 0;">ACCESO COMPLETO 14 DÍAS</p>
+                    <ul class="features-list">
+                        <li>✅ Emails ILIMITADOS</li>
+                        <li>✅ Ad copy ILIMITADO</li>
+                        <li>✅ Usuarios ILIMITADOS</li>
+                        <li>✅ Todas las features</li>
+                        <li>✅ Sin tarjeta de crédito</li>
+                        <li>✅ Cancela en cualquier momento</li>
+                    </ul>
+                    <button class="cta-button">Empezar Prueba Gratis</button>
+                </div>
+
+                <div class="plan">
+                    <h3>Pro</h3>
+                    <div class="price">$99<span style="font-size: 16px;">/mes</span></div>
+                    <ul class="features-list">
+                        <li>500 emails/día</li>
+                        <li>20 variantes de ad copy</li>
+                        <li>5 usuarios</li>
+                        <li>Soporte prioritario</li>
+                        <li>Análisis de resultados</li>
+                        <li>Integraciones CRM</li>
+                    </ul>
+                    <button class="cta-button">Mejorar a Pro</button>
+                </div>
+
+                <div class="plan">
+                    <h3>Enterprise</h3>
+                    <div class="price">$499<span style="font-size: 16px;">/mes</span></div>
+                    <ul class="features-list">
+                        <li>Emails ilimitados</li>
+                        <li>Copy ilimitado</li>
+                        <li>Usuarios ilimitados</li>
+                        <li>Soporte 24/7</li>
+                        <li>API personalizada</li>
+                        <li>Consultoría estratégica</li>
+                    </ul>
+                    <button class="cta-button">Contactar Ventas</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 AI Sales Machine. Generando leads con IA.</p>
+    </footer>
+
+    <script>
+        document.getElementById('demoForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const product = document.getElementById('product').value;
+            const audience = document.getElementById('audience').value;
+            const competitor = document.getElementById('competitor').value;
+
+            console.log('Enviando solicitud...', { product, audience, competitor });
+
+            try {
+                const response = await fetch('http://localhost:3001/api/generate-emails', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        product,
+                        audience,
+                        competitor,
+                        count: 5
+                    })
+                });
+
+                const data = await response.json();
+                console.log('Response:', data);
+
+                const output = document.getElementById('output');
+                const emailsList = document.getElementById('emailsList');
+
+                if (data.success && data.data.emails) {
+                    emailsList.innerHTML = data.data.emails.map(email => `
+                        <div class="email-item">
+                            <div class="email-subject">Asunto: ${email.subject}</div>
+                            <div>${email.body.substring(0, 200)}...</div>
+                        </div>
+                    `).join('');
+                } else {
+                    emailsList.innerHTML = '<p>Error generando emails. Verifica la consola.</p>';
+                }
+
+                output.classList.add('active');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>
