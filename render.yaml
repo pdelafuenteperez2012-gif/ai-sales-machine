@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: ai-sales-machine-backend
+    env: node
+    plan: free
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: CLAUDE_API_KEY
+        scope: run
+      - key: STRIPE_SECRET_KEY
+        scope: run
+      - key: STRIPE_PUBLISHABLE_KEY
+        scope: run
+      - key: NODE_ENV
+        value: production
+
+  - type: web
+    name: ai-sales-machine-frontend
+    staticSite: true
+    buildCommand: echo "No build needed"
+    publishPath: frontend
+    plan: free
